@@ -1,0 +1,54 @@
+<% layout('layouts/boilerplate') %> 
+<div class="row">
+    <h1 class="text-center">New Campground</h1>
+    <div class="col-6 offset-3">
+        <form action="/campgrounds" method="POST"  class="validated-form" novalidate>
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="campground[title]" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>  
+              <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="campground[location]" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="text" class="form-control" id="image" name="campground[image]" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="campground[description]" required></textarea>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="price" class="form-label" id="price-label">Price</label>
+
+                  <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" 
+                id="price" name="campground[price]" placeholder="0"
+                aria-label="price" aria-describedby="price-label" required>
+                <span class="input-group-text" >.00</span>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              </div>
+              
+              <div class="mb-3">
+                  <button class="btn btn-success " type="submit">Add Campground</button>
+              </div>
+            </form>
+    </div>
+</div>
