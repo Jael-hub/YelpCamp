@@ -1,9 +1,15 @@
+if(process.env.NODE_ENV !== "production"){
+    require('dotenv').config();
+
+}
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
-const ExpressError = require('./utils/ExpressError')
+
+const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const flash = require('connect-flash')
 
@@ -25,7 +31,7 @@ db.on("error", console.error.bind(console, "Connection error:"));
 db.once("open", () => {
     console.log("Database connected")
 });
-////////////////SETTING UP ENVIRONMENT//////////////////////////////////
+//SETTING UP ENVIRONMENT///////////////
 const app = express();
 
 //setting up ejsmate engine
