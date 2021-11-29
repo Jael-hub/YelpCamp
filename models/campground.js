@@ -12,6 +12,8 @@ ImageSchema.virtual('thumbnail').get(function(){
     return this.url.replace('/upload', '/upload/w_200');
 });
 
+const opts ={toJSON: {virtuals: true}};
+
 const CampgroundSchema = new Schema({
     title: String,
     images: [ImageSchema],
@@ -41,6 +43,12 @@ const CampgroundSchema = new Schema({
     ]
 
 
+}, opts);
+
+CampgroundSchema.virtual('properties.popUpMarkup').get(function () {
+    return `
+    <strong><a href="/campgrounds/${this._id}">${this.title}</a><strong>
+    <p>${this.description.substring(0, 20)}...</p>`
 });
 
 //delete middleware. first it finds the doc (campground) and deletes it, then it captures all the reviews
