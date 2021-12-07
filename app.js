@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== "production"){
 
 }
 
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -10,6 +11,7 @@ const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const MongoDBStore=require('connect-mongo')(session);
 
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
@@ -24,8 +26,10 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 
+const dbUrl =process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp'
+// const dbUrl = ;
 //CONNECTING TO DATABASE//////
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {  
+mongoose.connect(dbUrl, {  
 });
 //checking if there's errors. 
 const db = mongoose.connection;
@@ -42,11 +46,24 @@ app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
+const secret= process.env.SECRET || 'thisshouldbeasecret'
+
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public') ));
+const store = new MongoDBStore({
+    url: dbUrl,
+    secret,
+    touchAfter: 24*60*60
+});
+store.on("error", function(e){
+    console.log("session store error", e)
+});
+
+
 
 const sessionConfig={
-    secret:'thisshouldbeabettersecret',
+    store,
+    secret,
     name:'blahhhhh',
     resave:false,
     saveUnitialized:true,
